@@ -1,0 +1,111 @@
+.top-navbar .navbar {
+    position: fixed;
+    width: 100%;
+    border-radius: 0px 0px 100px 100px;
+    transition: height 0.3s ease-out, background 0.3s ease-out,
+        box-shadow 0.3s ease-out;
+    transform: translate3d(0, 0, 0);
+    box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    top: 0;
+}
+.navbar-expand-lg {
+    .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+    }
+    .ml-auto {
+        margin-left: auto !important;
+    }
+    .navbar-nav {
+        display: flex;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        li {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+}
+
+.top-navbar .navbar-light .navbar-nav .nav-link {
+    color: #010101;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+.dropdown {
+    position: relative;
+}
+.top-navbar .navbar-light .navbar-nav .nav-link {
+    color: #010101;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    &:hover {
+        background-color: #d65106;
+        color: white;
+    }
+}
+.top-navbar .navbar-light .navbar-nav .btnHi .dropdown-toggle{
+    color: #010101;
+    font-size: 16px;
+    // padding: 10px 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    &:hover {
+        background-color: #d65106;
+        color: white;
+    }
+}
+.dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: '';
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+    border: none;
+    border-radius: 0px;
+    padding: 10px;
+    box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.5);
+}
+.navbar-expand-lg .navbar-nav .dropdown-menu a {
+    padding: 10px 10px;
+    text-transform: uppercase;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+// .btn-cart {
+//     position: relative;
+// }
+.btn-num {
+    height: 18px;
+    line-height: 1;
+    border-radius: 50%;
+    padding: 0 5px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+  

@@ -1,0 +1,39 @@
+<div class='imgLog'>
+    <img
+        src='https://res.cloudinary.com/dqx1h3eve/image/upload/v1688045436/bgLau_foml5a.png'
+        alt=''
+        style='filter:brightness(50%); width: 100%; height: 100vh;'
+    />
+</div>
+<div class='bigLogIn'>
+    <form method='POST' action='/user/login1'>
+        <div class='logTitle'>
+            <p class='logSign'>Đăng nhập</p>
+            <p style='font-size: 20px;'>Xin chào, hãy đăng nhập tại đây !</p>
+        </div>
+        <div class='formLog'>
+            {{!-- {{#if }}
+                <div class='alert alert-danger'>
+                    {{}}
+                </div>
+            {{/if}} --}}
+            <div class='form-gp'>
+                <label for='exampleInputEmail1'>Email</label>
+                <input type='email' name='email' placeholder='Nhập email' />
+            </div>
+            <div class='form-gp'>
+                <label for='exampleInputPassword1'>Mật khẩu</label>
+                <input
+                    type='password'
+                    name='password'
+                    placeholder='Nhập mật khẩu'
+                />
+            </div>
+            <button type='submit' class='btn btn-primary'>Submit</button>
+            <div class='form-footer text-center mt-5 btn-text'>
+                <p class='text-muted'>Bạn chưa có tài khoản ?</p>
+                <a href='/user/register' style='text-decoration: none;'>Đăng kí</a>
+            </div>
+        </div>
+    </form>
+</div>

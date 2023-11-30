@@ -1,0 +1,115 @@
+{{!-- <div class="mt-4">
+    <div class="row">
+        <div class="col-sm-6 col-lg-4" >
+            <div class="card-item">
+                <img class="card-img-top" src="{{topping.image}}" alt="{{topping.name}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{topping.name}}</h5>
+                    <p class="card-text">Description: {{topping.description}}</p>
+                    <p class="card-text">Price: {{topping.price}}</p>
+                    <a href="/hotpots/{{this.slug}}" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+<div class='all-page-title page-breadcrumb'>
+    <div class='container text-center'>
+        <div class='row'>
+            <div class='col-lg-12'>
+                <h1>Nhúng là mê, ăn là ghiền</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method='POST' action='/cart/topping/{{topping.slug}}'>
+    <div class='container' style='margin-top: 100px;'>
+        <div class='col-xs-12 bootstrap snippets bootdeys'>
+            <!-- product -->
+            <div class='product-content product-wrap clearfix'>
+                <div class='row'>
+                    <div class='col-md-5 col-sm-12 col-xs-12'>
+                        <div class='product-image'>
+                            <img
+                                src='{{topping.image}}'
+                                alt='{{topping.name}}'
+                                class='img-responsive'
+                            />
+                            {{! <span class='tag2 hot'>
+                                HOT
+                            </span> }}
+                        </div>
+                    </div>
+                    <div class='col-md-7 col-sm-12 col-xs-12'>
+                        <div class='product-deatil'>
+                            <h5 class='name'>
+                                <a href='#'>
+                                    {{topping.name}}
+                                </a>
+                            </h5>
+                            <p class='price-container'>
+                                <span>{{topping.price}} VNĐ</span>
+                            </p>
+                            <span class='tag1'></span>
+                        </div>
+                        <div class='description'>
+                            <p>{{topping.description}}</p>
+                        </div>
+                        <div class='product-info smart-form'>
+                            <div class='row'>
+                                <div class='col-md-6 col-sm-6 col-xs-6'>
+                                    <div class='buttons_added'>
+                                        <input
+                                            aria-label='quantity'
+                                            class='input-qty'
+                                            max='100'
+                                            min='1'
+                                            name='quantity'
+                                            type='number'
+                                            value='quantity'
+                                            style='margin-left: 4%;'
+                                        />
+                                    </div>
+                                    <button
+                                        href='javascript:void(0);'
+                                        class='btn'
+                                        style='background-color: #d65106; color:aliceblue; margin-top: 20px;'
+                                    >Thêm vào giỏ hàng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end product -->
+        </div>
+    </div>
+</form>
+
+<p style="font-size: 25px; font-weight:700; margin-top: 2%;">Món tương tự</p>
+
+<div class="row inner-menu-box">								
+				<div class="col-12" style="margin-left: 10%;">
+					<div class="tab-content" id="v-pills-tabContent">
+						<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+							<div class="row">
+								{{#each nameList}}
+								<div class="col-lg-3 col-md-6 special-grid drinks">
+									<div class="gallery-single fix">
+										{{!-- <a href="/hotpots/{{this.slug}}" class="btn btn-primary" style="background: none; border:none;"> --}}
+											<img src="{{this.image}}" alt="{{this.name}}">
+											<div class="why-text">
+												<h4>{{this.name}}</h4>
+												<p>{{this.description}}</p>
+												<h5>{{this.price}} VNĐ</h5>
+											</div>
+										</a>
+									</div>
+								</div>
+								{{/each}}
+							</div>
+					</div>
+				</div>
+			</div>

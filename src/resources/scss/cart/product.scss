@@ -1,0 +1,163 @@
+.ftco-section {
+    padding: 6em 0;
+    position: relative;
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        .table-wrap {
+            overflow-x: scroll;
+            .table {
+                min-width: 1000px !important;
+                width: 100%;
+                background: #fff;
+                box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+                margin-bottom: 1rem;
+                border-collapse: collapse;
+                .thread-primary{
+                    background: #b7472a;
+                    border-radius: 4px;
+                    tr{
+                        th{
+                            border: none;
+                            padding: 30px;
+                            font-size: 20px;
+                            font-weight: 500;
+                            // color: rgb(229, 224, 224);
+                        }
+                    }
+                }
+                tbody{
+                    .alert{
+                        position: relative;
+                        border: 1px solid transparent;
+                        border-radius: 0.25rem;
+                        td{
+                            border: none;
+                            padding: 30px;
+                            background: #fff;
+                            border-bottom: 4px solid #f8f9fd;
+                            vertical-align: middle;
+                            padding-left: 0;
+                            .checkbox-primary{
+                                color: #b7472a;
+                                display: block;
+                                position: relative;
+                                cursor: pointer;
+                                font-size: 16px;
+                                font-weight: 500;                         
+                                user-select: none;
+                                input{
+                                    position: absolute;
+                                    opacity: 0;
+                                    cursor: pointer;
+                                    height: 0;
+                                    width: 0;
+                                    &:checked + .checkmark::after{
+                                        display: block;
+                                        content: "\f14a";
+                                        font-family: "FontAwesome";
+                                        color: #b7472a;
+                                    }
+                                }
+                                // .checkmark {
+                                //     position: absolute;
+                                //     top: 0;
+                                //     left: 0;
+                                //     &::after{                                  
+                                //         content: "\f0c8";
+                                //         font-family: "FontAwesome";
+                                //         position: absolute;
+                                //         color: rgba(0, 0, 0, 0.1);
+                                //         font-size: 20px;
+                                //         margin-top: -14px;
+                                //         transition: all 0.3s ease;
+                                //     }
+                                // }
+                            }
+                            .img{
+                                width: 80px;
+                                background-size: cover;
+                                background-repeat: no-repeat;
+                                background-position: center center;
+                            }
+                            .email{
+                                span{
+                                    &:first-child{
+                                        font-weight: 500;
+                                        font-size: 20px;
+                                        color: #000000;
+                                    }
+                                    &:last-child{
+                                        color: rgba(0, 0, 0, 0.3);
+                                    }
+                                }
+                            }
+                            .input-group{
+                                position: relative;
+                                display: flex;
+                                flex-wrap: wrap;
+                                width: 100%;
+                                .form-control{
+                                    position: relative;
+                                    width: 5px;
+                                    height: 52px !important;
+                                    background: #fff !important;
+                                    color: #000000 !important;
+                                    font-size: 18px;
+                                    border-radius: 5px;
+                                    box-shadow: none !important;
+                                    padding: 0.375rem 0.75rem;
+                                    border: 1px solid #ced4da;
+                                }
+                            }
+                            button{
+                                border: 1px solid white;
+                                background-color: #fff;
+                                font-size: 12px;
+                                color: #d85865;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.ftco-animate{
+    // opacity: 0;
+    // visibility: hidden;
+    margin-top: 3rem !important;
+    width: 30%;
+    .cart-total{
+        width: 100%;
+        display: block;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 1rem !important;
+        h3{
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: black;
+        }
+        p{
+            span{
+                display: block;
+                width: 50%;
+            }
+        }
+    }
+    .btn{
+        background: #b7472a !important;
+        border: 1px solid #b7472a !important;
+        color: #fff !important;
+        font-size: 17px;
+        font-weight: 500;
+        width: 100%;
+    }
+}

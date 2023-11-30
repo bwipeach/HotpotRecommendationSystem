@@ -1,0 +1,306 @@
+<div class='all-page-title page-breadcrumb'>
+    <div class='container text-center'>
+        <div class='row'>
+            <div class='col-lg-12'>
+                <h1>Nhúng là mê, ăn là ghiền</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Xóa hotpot -->
+<form class="mt-4" name="container-form" method="POST" action="/hotpots/handle-trash-actions">
+    <div>
+        <a href="/warehouse/stored/hotpots">Sản phẩm</a>
+        <h3>Xóa lẩu</h3>
+    </div>
+    <div class="mt-4 d-flex align-items-center">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-all">
+            <label class="form-check-label" for="checkbox-all">
+                Chọn tất cả
+            </label>
+        </div>
+        <select class="form-select form-select-sm checkbox-select-all-options" name="action" required>
+            <option value="">-- Lựa chọn --</option>
+            <option value="delete">Xóa</option>
+            <option value="restore">Khôi phục</option>
+        </select>
+        <button class="btn btn-primary btn-sm check-all-submit-btn mt-1 disabled">Xác nhận</button>
+    </div>
+    <table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">No.</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Giá</th>
+                <th scope="col" colspan="2">Xóa ngày</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each hotpot}}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="hotpotIds[]" value="{{this._id}}">
+                    </div>
+                </td>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.deletedAt}}</td>
+                <td>
+                    <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a>
+                    <a href="" class="btn btn-link" data-bs-toggle="modal" data-id="{{this._id}}"
+                        data-bs-target="#deleteHotpotModal">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    Hiện không có.
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+<!-- Xóa và khôi phục hotpot -->
+<!-- Confirm delete -->
+<div id="deleteHotpotModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chờ chút!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn ? Nếu không, hãy chọn hủy :></p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-hotpot" type="button" class="btn btn-danger">Đồng ý</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="delete-hotpot-form" method="POST"></form>
+<form name="restore-hotpot-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let hotpotId;
+        let deleteForm = document.forms['delete-hotpot-form'];
+        let restoreForm = document.forms['restore-hotpot-form'];
+        let btnDeleteHotpot = document.getElementById('btn-delete-hotpot');
+        let restoreBtn = document.querySelectorAll('.btn-restore');
+        let checkboxAll = document.querySelector('#checkbox-all');
+        let hotpotItemCheckbox = document.querySelectorAll('input[name="hotpotIds[]"]');
+        let checkAllSubmitBtn = document.querySelector('.check-all-submit-btn');
+
+        // When click on Delete button
+        document.querySelector('#deleteHotpotModal').addEventListener('show.bs.modal', function (event) {
+            let button = event.relatedTarget;
+            hotpotId = button.getAttribute('data-id');
+        });
+
+        // Delete button click
+        btnDeleteHotpot.addEventListener('click', () => {
+            deleteForm.action = '/hotpots/' + hotpotId + '/force?_method=DELETE';
+            deleteForm.submit();
+        });
+
+        // Restore button click
+        restoreBtn.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let id = btn.getAttribute('data-id');
+                restoreForm.action = '/hotpots/' + id + '/restore?_method=PATCH';
+                restoreForm.submit();
+            });
+        });
+
+        // Checkbox all change
+        checkboxAll.addEventListener('change', function () {
+            let isCheckedAll = this.checked;
+            hotpotItemCheckbox.forEach((checkbox) => {
+                checkbox.checked = isCheckedAll;
+            });
+            renderCheckAllSubmitBtn();
+        });
+
+        // Hotpot item change
+        hotpotItemCheckbox.forEach((checkbox) => {
+            checkbox.addEventListener('change', function () {
+                let isCheckedAll = hotpotItemCheckbox.length === document.querySelectorAll('input[name="hotpotIds[]"]:checked').length;
+                checkboxAll.checked = isCheckedAll;
+                renderCheckAllSubmitBtn();
+            });
+        });
+
+        // Check All Perform button clicked
+        checkAllSubmitBtn.addEventListener('click', function (e) {
+            let isSubmitable = this.classList.contains('disabled');
+            if (isSubmitable) {
+                e.preventDefault();
+            }
+        });
+
+        // Re-render Check All Perform button
+        const renderCheckAllSubmitBtn = () => {
+            let checkedCount = document.querySelectorAll('input[name="hotpotIds[]"]:checked').length;
+            if (checkedCount) {
+                checkAllSubmitBtn.classList.remove('disabled');
+            } else {
+                checkAllSubmitBtn.classList.add('disabled');
+            }
+        };
+    });
+</script>
+
+
+
+
+
+
+   <!-- Xóa topping -->
+<form class="mt-4" name="container-form" method="POST" action="/toppings/handle-trash-actions">
+    <div>
+        <h3>Xóa topping</h3>
+    </div>
+    <table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">No.</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Giá</th>
+                <th scope="col" colspan="2">Xóa ngày</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each topping}}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="toppingIds[]" value="{{this._id}}">
+                    </div>
+                </td>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.deletedAt}}</td>
+                <td>
+                    <a href="#" class="btn btn-link btn-restoreTopping" data-id="{{this._id}}">Khôi phục</a>
+                    <a href="#" class="btn btn-link" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#deleteToppingModal">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    Hiện không có.
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+<!-- Xóa và khôi phục topping -->
+<!-- Confirm delete -->
+<div id="deleteToppingModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chờ chút!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn ? Nếu không, hãy chọn hủy :></p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-topping" type="button" class="btn btn-danger">Đồng ý</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="delete-topping-form" method="POST"></form>
+<form name="restore-topping-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let toppingId;
+        let deleteForm = document.forms['delete-topping-form'];
+        let restoreForm = document.forms['restore-topping-form'];
+        let btnDeleteTopping = document.getElementById('btn-delete-topping');
+        let restoreBtn = document.querySelectorAll('.btn-restoreTopping');
+        let checkboxAll = document.querySelector('#checkbox-all');
+        let toppingItemCheckbox = document.querySelectorAll('input[name="toppingIds[]"]');
+        let checkAllSubmitBtn = document.querySelector('.check-all-submit-btn');
+
+        // When click on Delete button
+        document.querySelector('#deleteToppingModal').addEventListener('show.bs.modal', function (event) {
+            let button = event.relatedTarget;
+            toppingId = button.getAttribute('data-id');
+        });
+
+        // Delete button click
+        btnDeleteTopping.addEventListener('click', () => {
+            deleteForm.action = '/toppings/' + toppingId + '/force?_method=DELETE';
+            deleteForm.submit();
+        });
+
+        // Restore button click
+        restoreBtn.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let id = btn.getAttribute('data-id');
+                restoreForm.action = '/toppings/' + id + '/restore?_method=PATCH';
+                restoreForm.submit();
+            });
+        });
+
+        // Checkbox all change
+        checkboxAll.addEventListener('change', function () {
+            let isCheckedAll = this.checked;
+            toppingItemCheckbox.forEach((checkbox) => {
+                checkbox.checked = isCheckedAll;
+            });
+            renderCheckAllSubmitBtn();
+        });
+
+        // Topping item change
+        toppingItemCheckbox.forEach((checkbox) => {
+            checkbox.addEventListener('change', function () {
+                let isCheckedAll = toppingItemCheckbox.length === document.querySelectorAll('input[name="toppingIds[]"]:checked').length;
+                checkboxAll.checked = isCheckedAll;
+                renderCheckAllSubmitBtn();
+            });
+        });
+
+        // Check All Perform button clicked
+        checkAllSubmitBtn.addEventListener('click', function (e) {
+            let isSubmitable = this.classList.contains('disabled');
+            if (isSubmitable) {
+                e.preventDefault();
+            }
+        });
+
+        // Re-render Check All Perform button
+        const renderCheckAllSubmitBtn = () => {
+            let checkedCount = document.querySelectorAll('input[name="toppingIds[]"]:checked').length;
+            if (checkedCount) {
+                checkAllSubmitBtn.classList.remove('disabled');
+            } else {
+                checkAllSubmitBtn.classList.add('disabled');
+            }
+        };
+    });
+</script>

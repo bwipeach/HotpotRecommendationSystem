@@ -1,0 +1,62 @@
+{{!-- <div class="mt-4">
+    <div class="row">
+        {{#each topping}}
+            <div class="col-sm-6 col-lg-4" >
+                <div class="card-item">
+                    <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.name}}</h5>
+                        <p class="card-text">Description: {{this.description}}</p>
+                        <p class="card-text">Price: {{this.price}}</p>
+                        <a href="/toppings/{{this.slug}}" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div> --}}
+
+<div class="all-page-title page-breadcrumb">
+	<div class="container text-center">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1>Nhúng là mê, ăn là ghiền</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="menu-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="heading-title text-center">
+						<h2>Các loại viên thả lẩu</h2>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row inner-menu-box">								
+				<div class="col-12">
+					<div class="tab-content" id="v-pills-tabContent">
+						<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+							<div class="row">
+								{{#each topping}}
+								<div class="col-lg-4 col-md-6 special-grid drinks">
+									<div class="gallery-single fix">
+										<a href="/toppings/{{this.slug}}" class="btn btn-primary" style="background: none; border:none;">
+											<img src="{{this.image}}" alt="{{this.name}}">
+											<div class="why-text">
+												<h4>{{this.name}}</h4>
+												<p>{{this.description}}</p>
+												<h5>{{this.price}} VNĐ</h5>
+											</div>
+										</a>
+									</div>
+								</div>
+								{{/each}}
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,282 @@
+<div class='all-page-title page-breadcrumb'>
+    <div class='container text-center'>
+        <div class='row'>
+            <div class='col-lg-12'>
+                <h1>Nhúng là mê, ăn là ghiền</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{{! -----------------Form hotpot-------------}}
+<form class="mt-4" name="container-form" method="POST" action="/hotpots/handle-form-actions">
+  <div>
+    <h3>Lẩu</h3>
+    <a href="/warehouse/trash/hotpots">Thùng rác ({{deleteHp}})</a>
+  </div>
+
+  <div class="mt-4 d-flex align-items-center">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="checkbox-all" />
+      <label class="form-check-label" for="checkbox-all">
+        Chọn tất cả
+      </label>
+    </div>
+
+    <select class="form-select form-select-sm checkbox-select-all-options" name="action" required>
+      <option value="">-- Lựa chọn --</option>
+      <option value="delete">Xóa</option>
+    </select>
+    <button class="btn btn-primary btn-sm check-all-submit-btn mt-1 disabled">Xác nhận</button>
+  </div>
+
+  <table class="table mt-2">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">No.</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Giá</th>
+        <th scope="col" colspan="2">Ngày tạo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each hotpot}}
+      <tr>
+        <td>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hotpotIds[]" value="{{this._id}}" />
+          </div>
+        </td>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.createdAt}}</td>
+        <td>
+          <a href="/hotpots/{{this._id}}/edit" class="btn btn-link">Cập nhật</a>
+          <a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteHotpotModal" data-id="{{this._id}}">Xóa</a>
+        </td>
+      </tr>
+      {{else}}
+      <tr>
+        <td colspan="5" class="text-center">
+          Hiện không có :(
+          <a href="/hotpots/create">Thêm lẩu</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</form>
+
+{{! confirm delete hotpot }}
+<div id="deleteHotpotModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chờ chút!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc là muốn xóa lẩu này?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete-hotpot" type="button" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{! Delete hidden form hotpot}}
+<form name="delete-hotpot-form" method="POST"></form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let containerForm = document.forms['container-form'];
+    let hotpotId;
+    let deleteForm = document.forms['delete-hotpot-form'];
+    let btnDeleteHotpot = document.getElementById('btn-delete-hotpot');
+    let checkboxAll = document.getElementById('checkbox-all');
+    let hotpotItemCheckbox = document.querySelectorAll('input[name="hotpotIds[]"]');
+    let checkAllSubmitBtn = document.querySelector('.check-all-submit-btn');
+
+    // when confirm clicked
+    document.getElementById('deleteHotpotModal').addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      hotpotId = button.getAttribute('data-id');
+    });
+
+    // when delete hotpot clicked
+    btnDeleteHotpot.onclick = () => {
+      deleteForm.action = '/hotpots/' + hotpotId + '?_method=DELETE';
+      deleteForm.submit();
+    };
+
+    // checkbox all change
+    checkboxAll.addEventListener('change', function () {
+      let isCheckedAll = this.checked;
+      hotpotItemCheckbox.forEach((checkbox) => {
+        checkbox.checked = isCheckedAll;
+      });
+      renderCheckAllSubmitBtn();
+    });
+
+    // hotpot item change
+    hotpotItemCheckbox.forEach((checkbox) => {
+      checkbox.addEventListener('change', function () {
+        let isCheckedAll = hotpotItemCheckbox.length === document.querySelectorAll('input[name="hotpotIds[]"]:checked').length;
+        checkboxAll.checked = isCheckedAll;
+        renderCheckAllSubmitBtn();
+      });
+    });
+
+    // check all perform button clicked
+    checkAllSubmitBtn.addEventListener('click', function (e) {
+      if (checkAllSubmitBtn.classList.contains('disabled')) {
+        e.preventDefault();
+      }
+    });
+
+    // re-render check all perform button
+    function renderCheckAllSubmitBtn() {
+      let checkedCount = document.querySelectorAll('input[name="hotpotIds[]"]:checked').length;
+      if (checkedCount) {
+        checkAllSubmitBtn.classList.remove('disabled');
+      } else {
+        checkAllSubmitBtn.classList.add('disabled');
+      }
+    }
+  });
+</script>
+
+
+
+
+<form class="mt-4" name="container-form" method="POST" action="/toppings/handle-form-actions">
+    <div>
+        <h3>Topping</h3>
+        <!-- <a href="/warehouse/trash/toppings">Trash ({{deleteToppingCount}})</a> -->
+    </div>
+
+
+    <table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">No.</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Giá</th>
+                <th scope="col" colspan="2">Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each topping}}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="toppingIds[]" value="{{this._id}}" />
+                    </div>
+                </td>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/toppings/{{this._id}}/edit" class="btn btn-link">Cập nhật</a>
+                    <a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteToppingModal"
+                        data-id="{{this._id}}">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    Hiện không có :(
+                    <a href="/toppings/create">Thêm topping</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+<!-- Confirm delete topping modal -->
+<div class="modal fade" id="deleteToppingModal" tabindex="-1" role="dialog" aria-labelledby="deleteToppingModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteToppingModalLabel">Chờ chút!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc là muốn xóa topping này?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-topping" type="button" class="btn btn-danger">Đồng ý</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete hidden form -->
+<form name="delete-topping-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let containerForm = document.forms['container-form'];
+        let toppingId;
+        let deleteForm = document.forms['delete-topping-form'];
+        let btnDeleteTopping = document.getElementById('btn-delete-topping');
+        let checkboxAll = document.getElementById('checkbox-all');
+        let toppingItemCheckbox = document.querySelectorAll('input[name="toppingIds[]"]');
+        let checkAllSubmitBtn = document.querySelector('.check-all-submit-btn');
+
+        // When confirm button is clicked
+        document.getElementById('deleteToppingModal').addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            toppingId = button.getAttribute('data-id');
+        });
+
+        // When delete topping button is clicked
+        btnDeleteTopping.onclick = () => {
+            deleteForm.action = '/toppings/' + toppingId + '?_method=DELETE';
+            deleteForm.submit();
+        };
+
+        // Checkbox all change
+        checkboxAll.addEventListener('change', function () {
+            let isCheckedAll = this.checked;
+            toppingItemCheckbox.forEach((checkbox) => {
+                checkbox.checked = isCheckedAll;
+            });
+            renderCheckAllSubmitBtn();
+        });
+
+        // Topping item change
+        toppingItemCheckbox.forEach((checkbox) => {
+            checkbox.addEventListener('change', function () {
+                let isCheckedAll = toppingItemCheckbox.length === document.querySelectorAll('input[name="toppingIds[]"]:checked').length;
+                checkboxAll.checked = isCheckedAll;
+                renderCheckAllSubmitBtn();
+            });
+        });
+
+        // Check all perform button clicked
+        checkAllSubmitBtn.addEventListener('click', function (e) {
+            if (checkAllSubmitBtn.classList.contains('disabled')) {
+                e.preventDefault();
+            }
+        });
+
+        // Re-render check all perform button
+        function renderCheckAllSubmitBtn() {
+            let checkedCount = document.querySelectorAll('input[name="toppingIds[]"]:checked').length;
+            if (checkedCount) {
+                checkAllSubmitBtn.classList.remove('disabled');
+            } else {
+                checkAllSubmitBtn.classList.add('disabled');
+            }
+        }
+    });
+</script>

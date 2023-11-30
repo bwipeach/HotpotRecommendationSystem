@@ -1,0 +1,83 @@
+{{! <div class="mt-4">
+  <h3>Add hotpot</h3>
+  <form class="mt-4" method="post" action="/hotpots/store">
+      <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name = "name">
+      </div>
+      <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" name = "description"></textarea>
+      </div>
+      <div class="form-group">
+          <label for="price">price</label>
+          <input type="text" class="form-control" id="price" name = "price">
+      </div>
+      <div class="form-group">
+          <label for="image">Image</label>
+          <input type="text" class="form-control" id="image" name = "image">
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div> }}
+<div class='all-page-title page-breadcrumb' style='margin-bottom: 5%;'>
+    <div class='container text-center'>
+        <div class='row'>
+            <div class='col-lg-12'>
+                <h1>Thêm lẩu</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<h3 style='color: red;'>Thêm lẩu</h3>
+<form
+    method='post'
+    action='/hotpots/store'
+    style='font-size: 20px;'
+>
+    <div class='mb-3' style='margin-left: 2.5%;'>
+        <label for='name' class='form-label'>Tên</label>
+        <input
+            type='text'
+            class='form-control'
+            id='name'
+            name='name'
+            style='font-size: 15px; width: 60%;'
+        />
+    </div>
+    <div class='mb-3' style='margin-left: 2.5%;'>
+        <label for='description' class='form-label'>Mô tả</label>
+        <input
+            type='text'
+            class='form-control'
+            id='description'
+            name='description'
+            style='font-size: 15px; width: 60%;'
+        />
+    </div>
+    <div class='mb-3 form-check'>
+        <label class='form-label' for='price'>Giá</label>
+        <input
+            type='text'
+            class='form-control'
+            id='price'
+            name='price'
+            style='font-size: 15px; width: 60%;'
+        />
+    </div>
+    <div class='mb-3 form-check'>
+        <label class='form-label' for='image'>Hình ảnh</label>
+        <input
+            type='text'
+            class='form-control'
+            id='image'
+            name='image'
+            style='font-size: 15px; width: 60%;'
+        />
+    </div>
+    <button
+        type='submit'
+        class='btn btn-primary'
+        style='margin-left: 2.5%;'
+    >Thêm</button>
+</form>
